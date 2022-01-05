@@ -12,6 +12,34 @@
   margin-bottom: 5vh;
 }
 
+.choosing-panel{
+  position: relative;
+  top: 10vh;
+  padding-top: 5vh !important;
+  padding-bottom: 15vh !important;
+}
+
+.choosing-header{
+  text-transform: uppercase;
+  text-shadow: 3px 3px 4px rgba(0,0,0,.3);
+  margin-bottom: 15vh;
+}
+
+.schema-button{
+  font-size: 1.3em;
+  letter-spacing: 0.06em;
+  font-family: "Oswald", sans-serif;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.4s;
+  color: rgba(30,30,30,.9);
+}
+
+.schema-button:hover{
+  filter: brightness(70%);
+}
+
 @media screen and (min-width: 320px) {
   .main-header{
     font-size: 1.9em;
