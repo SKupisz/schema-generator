@@ -5,6 +5,7 @@ import { MainContainer } from "../styled/main.jsx";
 import { chooseSchema } from "../redux/choosingSchema/choosingSchemaAction.js";
 import Landing from "./subcomponents/landing.jsx";
 import TypeChoosing from "./subcomponents/typeChoosing.jsx";
+import MainPanel from "./subcomponents/mainPanel.jsx";
 
 import Background from "../images/main-background2.jpg";
 
@@ -17,10 +18,10 @@ const Main = () => {
     return <MainContainer className="block-center" background={Background}>
         {
             initialPhase === 0 ? <Landing callback={(newState) => setInitialPhase(newState)}/> : 
-            initialPhase === 1 ? <TypeChoosing callback={(newChoice) => {setInitialPhase(2); dispatch(chooseSchema(newChoice))}}/> : <></>
+            initialPhase === 1 ? <TypeChoosing callback={(newChoice) => {dispatch(chooseSchema(newChoice));setInitialPhase(2); }}/> : <></>
         }
         {
-            schemaType === "None" ? <></> : <>{/* TODO: create the form for making the Schema*/}</>
+            schemaType === "None" ? <></> : initialPhase === 2 ? <MainPanel/> : <></>
         }
     </MainContainer>
 };
