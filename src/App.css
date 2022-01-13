@@ -65,6 +65,23 @@
   width: calc(90% - 20px);
 }
 
+.property-box{
+  border-radius: 10px;
+  background: rgba(230,230,230,.2);
+  font-size: 1.3em;
+  letter-spacing: 0.05em;
+  text-shadow: 3px 3px 4px rgba(0,0,0,.2);
+  font-family: "Oswald", sans-serif;
+}
+
+.property-name{
+  background: rgba(105, 255, 218, 0.2);
+}
+
+.property-value{
+  background: rgba(80, 180, 247, 0.2);
+}
+
 @media screen and (min-width: 320px) {
   .main-header{
     font-size: 1.9em;

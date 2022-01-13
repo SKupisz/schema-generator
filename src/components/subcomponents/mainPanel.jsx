@@ -1,6 +1,6 @@
-import React, {useEffect, useRef} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { VStack,  HStack, FormControl, Heading, Button, Input, useMediaQuery } from "@chakra-ui/react";
+import { VStack, Box, HStack, FormControl, Heading, Button, Input, useMediaQuery } from "@chakra-ui/react";
 
 import { AddToSchema, ModifySchemaElem } from "../../redux/renderingSchema/renderingSchemaAction.js";
 
@@ -8,6 +8,8 @@ const MainPanel = () => {
 
     const nameInputRef = useRef();
     const valueInputRef = useRef();
+
+    const [currentRender, setCurrentRender] = useState(null);
 
     const currentSchemaName = useSelector(state => state.chose.currentSchema);
     const currentSchema = useSelector(state => state.render);
@@ -17,13 +19,6 @@ const MainPanel = () => {
     const isAtMostPC = useMediaQuery("(min-width: 1440px)");
     const isASmallerDevice = useMediaQuery("(min-width: 1024px)");
     const isBreakpointForAdding = useMediaQuery("(min-width: 680px)");
-
-    useEffect(() => {
-        dispatch(ModifySchemaElem({
-            "@context": "https://schema.org",
-            "@type": currentSchemaName,
-        }));
-    }, []);
 
     const handleTheAdding = () => {
         const name = nameInputRef.current.value;
@@ -36,6 +31,29 @@ const MainPanel = () => {
             valueInputRef.current.value = "";
         }
     };
+    
+    useEffect(() => {
+        dispatch(ModifySchemaElem({
+            "@context": "https://schema.org",
+            "@type": currentSchemaName,
+        }));
+    }, []);
+
+    useEffect(() => {
+        let newCurrentRender=[];
+        const schemaKeys = Object.keys(currentSchema);
+        for(let i = 2; i < schemaKeys.length; i++){ // we don't render the first two elements
+            newCurrentRender.push(<HStack p={10} justify="left">
+                <Box p={10} pr={20} pl={20} ml={5} className="property-box property-name">
+                    {schemaKeys[i]}
+                </Box>
+                <Box p={10} pr={20} pl={20} mr={5} className="property-box property-value">
+                    {currentSchema[schemaKeys[i]]}
+                </Box>
+            </HStack>)
+        }
+        setCurrentRender(newCurrentRender);
+    }, [currentSchema]);
 
     return <FormControl w={isASmallerDevice[0] ? isAtMostPC[0] ? "60%" : "80%" : "95%"} className="block-center panel" spacing={4} align="center">
         <Heading align="center" as="h1" size="4xl" color="rgba(240,240,240,.7)" w="100%" className="block-center choosing-header">
@@ -62,6 +80,9 @@ const MainPanel = () => {
                 Add
             </Button>
         </VStack>}
+        <VStack spacing={0} align="left" justify="left" className="block-center" w="60%" mt={10}>
+            {currentRender}
+        </VStack>
     </FormControl>
 };
 
