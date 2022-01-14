@@ -10,6 +10,7 @@ const MainPanel = () => {
     const valueInputRef = useRef();
 
     const [currentRender, setCurrentRender] = useState(null);
+    const [isSchemaCopied, toggleIsSchemaCopied] = useState(false);
 
     const currentSchemaName = useSelector(state => state.chose.currentSchema);
     const currentSchema = useSelector(state => state.render);
@@ -31,6 +32,12 @@ const MainPanel = () => {
             valueInputRef.current.value = "";
         }
     };
+
+    const copySchemaToClipboard = () => {
+        const textToCopy = JSON.stringify(currentSchema);
+        navigator.clipboard.writeText(textToCopy);
+        toggleIsSchemaCopied(true);
+    }
     
     useEffect(() => {
         dispatch(ModifySchemaElem({
@@ -52,6 +59,7 @@ const MainPanel = () => {
                 </Box>
             </HStack>)
         }
+        toggleIsSchemaCopied(false);
         setCurrentRender(newCurrentRender);
     }, [currentSchema]);
 
@@ -59,6 +67,17 @@ const MainPanel = () => {
         <Heading align="center" as="h1" size="4xl" color="rgba(240,240,240,.7)" w="100%" className="block-center choosing-header">
             {currentSchemaName} Schema
         </Heading>
+        <VStack spacing={4} align="center" justify="center" mb={10}>
+            <Button align="center" className="schema-button block-center" p={14} pr={30} pl={30}
+                onClick={() => copySchemaToClipboard()}>
+                Copy schema to clipboard
+            </Button>
+            {
+                isSchemaCopied ? <Box className="copy-info block-center">
+                    Schema copied!
+                </Box>: <></>
+            }
+        </VStack>
         
         {isBreakpointForAdding[0] ? <HStack spacing={10} align="center" justify="center">
             <Input placeholder="Name..." ref = {nameInputRef} p={14}

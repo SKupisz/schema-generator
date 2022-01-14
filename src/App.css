@@ -82,6 +82,14 @@
   background: rgba(80, 180, 247, 0.2);
 }
 
+.copy-info{
+  font-size: 1.1em;
+  color: rgba(20,250,20,.6);
+  font-family: "Oswald", sans-serif;
+  text-shadow: 3px 3px 4px rgba(0,0,0,.1);
+  letter-spacing: 0.06em;
+}
+
 @media screen and (min-width: 320px) {
   .main-header{
     font-size: 1.9em;
